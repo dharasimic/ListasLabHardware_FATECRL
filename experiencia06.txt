@@ -1,0 +1,543 @@
+#define ex05
+
+#ifdef ex01
+/*Monte mais 1 led e modifique o programa para que os 2 leds 
+sejam controlados pelo potenciômetro.*/
+
+int ledPin1 = 11;
+int ledPin2 = 10;
+int pwmPin = A0;
+unsigned int valorLido;
+unsigned int pwm;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+Serial.begin(9600);
+}
+
+void loop() {
+valorLido = analogRead(pwmPin); // valor entre 0 e 1023
+//mostra o valor lido na porta analógica
+Serial.println(valorLido);
+pwm = map(valorLido, 0, 1023, 0, 255); // Mudança de escala
+//Escreve no led um sinal PWM proporcional ao valor Lido
+analogWrite(ledPin1,pwm);
+analogWrite(ledPin2,pwm);
+}
+
+#endif
+
+#ifdef ex02
+/*Modifique o programa para que os leds funcionem invertidos. 
+Com a variação do potenciômetro 1 led vai acendendo e 
+outro led vai apagando.*/
+
+int ledPin1 = 11;
+int ledPin2 = 10;
+int pwmPin = A0;
+unsigned int valorLido;
+unsigned int pwm;
+unsigned int pwm2;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+pinMode(ledPin2, OUTPUT);
+Serial.begin(9600);
+}
+
+void loop() {
+valorLido = analogRead(pwmPin); // valor entre 0 e 1023
+//mostra o valor lido na porta analógica
+Serial.println(valorLido);
+pwm = map(valorLido, 0, 1023, 0, 255);
+pwm2 = 255 - pwm;  
+//Escreve no led um sinal PWM proporcional ao valor Lido
+analogWrite(ledPin1,pwm);
+analogWrite(ledPin2,pwm2);
+}
+#endif
+
+#ifdef ex03
+/*Monte mais 1 led. Conforme o potenciômetro vai variando, 
+os leds vão acendendo
+progressivamente.*/
+
+int ledPin1 = 11;
+int ledPin2 = 10;
+int ledPin3 = 9;
+int pwmPin = A0;
+
+unsigned int valorLido;
+unsigned int pwm;
+unsigned int pwm2;
+unsigned int pwm3;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+pinMode(ledPin2, OUTPUT);
+pinMode(ledPin3, OUTPUT);
+
+
+Serial.begin(9600);
+}
+
+void loop() {
+valorLido = analogRead(pwmPin); // valor entre 0 e 1023
+//mostra o valor lido na porta analógica
+Serial.println(valorLido);
+  if (valorLido <= 341) {
+    pwm = map(valorLido, 0, 341, 0, 255);
+    pwm2 = 0;
+    pwm3 = 0;
+  } else if (valorLido <= 682) {
+    pwm = 255;
+    pwm2 = map(valorLido, 341, 682, 0, 255);
+    pwm3 = 0;
+  } else {
+    pwm = 255;
+    pwm2 = 255;
+    pwm3 = map(valorLido, 682, 1023, 0, 255);
+  }
+//Escreve no led um sinal PWM proporcional ao valor Lido
+analogWrite(ledPin1,pwm);
+analogWrite(ledPin2,pwm2);
+analogWrite(ledPin3,pwm3);
+}
+#endif
+
+#ifdef ex04
+/*Monte o buzzer e quando o último led acender apite o 
+buzzer junto.*/
+
+int ledPin1 = 11;
+int ledPin2 = 10;
+int ledPin3 = 9;
+int pwmPin = A0;
+int buzina = 7;
+int estadoBuzina = 0;
+unsigned int valorLido;
+unsigned int pwm;
+unsigned int pwm2;
+unsigned int pwm3;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+pinMode(ledPin2, OUTPUT);
+pinMode(ledPin3, OUTPUT);
+pinMode(buzina, OUTPUT);
+
+Serial.begin(9600);
+}
+
+void loop() {
+valorLido = analogRead(pwmPin); // valor entre 0 e 1023
+Serial.println(valorLido);
+Serial.println(estadoBuzina);
+  if (valorLido <= 341) {
+    pwm = map(valorLido, 0, 341, 0, 255);
+    pwm2 = 0;
+    pwm3 = 0;
+  } else if (valorLido <= 682) {
+    pwm = 255;
+    pwm2 = map(valorLido, 341, 682, 0, 255);
+    pwm3 = 0;
+  } else {
+    pwm = 255;
+    pwm2 = 255;
+    pwm3 = map(valorLido, 682, 1023, 0, 255);
+  }
+  
+  if (pwm3 == 255)
+{
+  tone(buzina, 3000);
+}
+
+  else
+  {
+    noTone(buzina);
+  }
+  
+//Escreve no led um sinal PWM proporcional ao valor Lido
+analogWrite(ledPin1,pwm);
+analogWrite(ledPin2,pwm2);
+analogWrite(ledPin3,pwm3);
+}
+#endif
+
+#ifdef ex05
+/*Transforme a leitura do potenciômetro em uma função.*/
+
+int ledPin1 = 11;
+int ledPin2 = 10;
+int ledPin3 = 9;
+int pwmPin = A0;
+int buzina = 7;
+int estadoBuzina = 0;
+unsigned int valorLido;
+unsigned int pwm;
+unsigned int pwm2;
+unsigned int pwm3;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+pinMode(ledPin2, OUTPUT);
+pinMode(ledPin3, OUTPUT);
+pinMode(buzina, OUTPUT);
+
+Serial.begin(9600);
+}
+
+int valor()
+{
+  int Valor = 0;
+  Valor = analogRead(pwmPin);
+  return Valor;
+}
+
+void loop() {
+ // valor entre 0 e 1023
+valorLido = valor();
+Serial.println(valorLido);
+Serial.println(estadoBuzina);
+  if (valorLido <= 341) {
+    pwm = map(valorLido, 0, 341, 0, 255);
+    pwm2 = 0;
+    pwm3 = 0;
+  } else if (valorLido <= 682) {
+    pwm = 255;
+    pwm2 = map(valorLido, 341, 682, 0, 255);
+    pwm3 = 0;
+  } else {
+    pwm = 255;
+    pwm2 = 255;
+    pwm3 = map(valorLido, 682, 1023, 0, 255);
+  }
+  if (pwm3 == 255)
+{
+  tone(buzina, 3000);
+}
+
+  else
+  {
+    noTone(buzina);
+  }
+//Escreve no led um sinal PWM proporcional ao valor Lido
+analogWrite(ledPin1,pwm);
+analogWrite(ledPin2,pwm2);
+analogWrite(ledPin3,pwm3);
+}
+#endif
+
+#ifdef ex06
+/*Transforme a mudança de escala (cálculo) em uma função.*/
+
+int ledPin1 = 11;
+int ledPin2 = 10;
+int ledPin3 = 9;
+int pwmPin = A0;
+int buzina = 7;
+int estadoBuzina = 0;
+unsigned int valorLido;
+unsigned int pwm;
+unsigned int pwm2;
+unsigned int pwm3;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+pinMode(ledPin2, OUTPUT);
+pinMode(ledPin3, OUTPUT);
+pinMode(buzina, OUTPUT);
+
+Serial.begin(9600);
+}
+
+int valor()
+{
+  int Valor = 0;
+  Valor = analogRead(pwmPin);
+  return Valor;
+}
+
+void calcularPWM(int valor) {
+  if (valor <= 341) {
+    pwm = map(valor, 0, 341, 0, 255);
+    pwm2 = 0;
+    pwm3 = 0;
+    noTone(buzina);
+  } else if (valor <= 682) {
+    pwm = 255;
+    pwm2 = map(valor, 341, 682, 0, 255);
+    pwm3 = 0;
+    noTone(buzina);
+  } else {
+    pwm = 255;
+    pwm2 = 255;
+    pwm3 = map(valor, 682, 1023, 0, 255);
+  }
+}
+
+void loop() {
+ // valor entre 0 e 1023
+valorLido = valor();
+Serial.println(valorLido);
+Serial.println(estadoBuzina);
+
+calcularPWM(valorLido);
+    
+analogWrite(ledPin1,pwm);
+analogWrite(ledPin2,pwm2);
+analogWrite(ledPin3,pwm3);
+  
+if (pwm3 == 255)
+{
+  tone(buzina, 3000);
+}
+
+  else
+  {
+    noTone(buzina);
+  }
+}
+#endif
+
+#ifdef ex07
+/*Transforme o controle de cada led em uma função*/
+
+int ledPin1 = 11;
+int ledPin2 = 10;
+int ledPin3 = 9;
+int pwmPin = A0;
+int buzina = 7;
+int estadoBuzina = 0;
+unsigned int valorLido;
+unsigned int pwm;
+unsigned int pwm2;
+unsigned int pwm3;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+pinMode(ledPin2, OUTPUT);
+pinMode(ledPin3, OUTPUT);
+pinMode(buzina, OUTPUT);
+
+Serial.begin(9600);
+}
+
+int valor()
+{
+  int Valor = 0;
+  Valor = analogRead(pwmPin);
+  return Valor;
+}
+
+void controleLed()
+{
+analogWrite(ledPin1,pwm);
+analogWrite(ledPin2,pwm2);
+analogWrite(ledPin3,pwm3);
+}
+
+void calcularPWM(int valor) {
+  if (valor <= 341) {
+    pwm = map(valor, 0, 341, 0, 255);
+    pwm2 = 0;
+    pwm3 = 0;
+    noTone(buzina);
+  } else if (valor <= 682) {
+    pwm = 255;
+    pwm2 = map(valor, 341, 682, 0, 255);
+    pwm3 = 0;
+    noTone(buzina);
+  } else {
+    pwm = 255;
+    pwm2 = 255;
+    pwm3 = map(valor, 682, 1023, 0, 255);
+  }
+}
+
+void loop() {
+ // valor entre 0 e 1023
+valorLido = valor();
+Serial.println(valorLido);
+Serial.println(estadoBuzina);
+
+calcularPWM(valorLido);
+controleLed();
+  
+if (pwm3 == 255)
+{
+  tone(buzina, 3000);
+}
+
+  else
+  {
+    noTone(buzina);
+  }
+}
+
+#endif
+
+#ifdef ex08
+/*Transforme o controle do buzzer em uma função*/
+
+int ledPin1 = 11;
+int ledPin2 = 10;
+int ledPin3 = 9;
+int pwmPin = A0;
+int buzina = 7;
+int estadoBuzina = 0;
+unsigned int valorLido;
+unsigned int pwm;
+unsigned int pwm2;
+unsigned int pwm3;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+pinMode(ledPin2, OUTPUT);
+pinMode(ledPin3, OUTPUT);
+pinMode(buzina, OUTPUT);
+
+Serial.begin(9600);
+}
+
+int valor()
+{
+  int Valor = 0;
+  Valor = analogRead(pwmPin);
+  return Valor;
+}
+
+void controleLed()
+{
+analogWrite(ledPin1,pwm);
+analogWrite(ledPin2,pwm2);
+analogWrite(ledPin3,pwm3);
+}
+
+void calcularPWM(int valor) {
+  if (valor <= 341) {
+    pwm = map(valor, 0, 341, 0, 255);
+    pwm2 = 0;
+    pwm3 = 0;
+    noTone(buzina);
+  } else if (valor <= 682) {
+    pwm = 255;
+    pwm2 = map(valor, 341, 682, 0, 255);
+    pwm3 = 0;
+    noTone(buzina);
+  } else {
+    pwm = 255;
+    pwm2 = 255;
+    pwm3 = map(valor, 682, 1023, 0, 255);
+  }
+}
+
+int buzzer()
+{
+  if (pwm3 == 255)
+    {
+        tone(buzina, 3000);
+    }
+    else
+    {
+      	noTone(buzina);
+    }
+}
+
+
+void loop() {
+ // valor entre 0 e 1023
+valorLido = valor();
+Serial.println(valorLido);
+Serial.println(estadoBuzina);
+
+calcularPWM(valorLido);
+controleLed();
+buzzer();
+}
+#endif
+
+#ifdef ex09
+/*transforme a escrita do led em uma função*/
+
+int ledPin1 = 11;
+int ledPin2 = 10;
+int ledPin3 = 9;
+int pwmPin = A0;
+int buzina = 7;
+int estadoBuzina = 0;
+unsigned int valorLido;
+unsigned int pwm;
+unsigned int pwm2;
+unsigned int pwm3;
+
+void setup() {
+pinMode(ledPin1, OUTPUT);
+pinMode(ledPin2, OUTPUT);
+pinMode(ledPin3, OUTPUT);
+pinMode(buzina, OUTPUT);
+
+Serial.begin(9600);
+}
+
+int valor()
+{
+  int Valor = 0;
+  Valor = analogRead(pwmPin);
+  return Valor;
+}
+
+void controleLed()
+{
+analogWrite(ledPin1,pwm);
+analogWrite(ledPin2,pwm2);
+analogWrite(ledPin3,pwm3);
+}
+
+void calcularPWM(int valor) {
+  if (valor <= 341) {
+    pwm = map(valor, 0, 341, 0, 255);
+    pwm2 = 0;
+    pwm3 = 0;
+    noTone(buzina);
+  } else if (valor <= 682) {
+    pwm = 255;
+    pwm2 = map(valor, 341, 682, 0, 255);
+    pwm3 = 0;
+    noTone(buzina);
+  } else {
+    pwm = 255;
+    pwm2 = 255;
+    pwm3 = map(valor, 682, 1023, 0, 255);
+  }
+}
+
+int buzzer()
+{
+  if (pwm3 == 255)
+    {
+        tone(buzina, 3000);
+    }
+    else
+    {
+      	noTone(buzina);
+    }
+}
+
+void escreverLED ()
+{
+  Serial.print("Potenciometro: ");
+  Serial.println(valorLido);
+}
+
+
+void loop() {
+ // valor entre 0 e 1023
+valorLido = valor();
+escreverLED();
+
+calcularPWM(valorLido);
+controleLed();
+buzzer();
+}
+#endif
