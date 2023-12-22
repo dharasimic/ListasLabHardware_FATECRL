@@ -1,0 +1,2 @@
+# ListasLabHardware_FATECRL
+ Todas as listas de exercícios feitas para a aula de Laboratório de Hardware no 1º Semestre do curso de Análise e Desenvolvimento de Sistemas da FATEC Rubens Lara. Observação: Esta matéria era voltada para sistemas embarcados com foco em Arduíno, portanto todos os códigos desse repositório foram montados com um projeto de Arduíno em mente. O site tinkercad.com foi usado como ferramenta de estudo.
